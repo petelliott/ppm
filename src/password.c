@@ -8,7 +8,17 @@
 
 
 /*
-    generate the password for a certain target
+    create a password from:
+        target:      the account you want generate the password for
+        master_pass: the password for your package manager
+        secret_fd:   the file to read your secret from
+
+    the system works by sha256 hashing each field, hashing the
+    resultant hshes, then outputing
+    the resultant password to stdio in base64.
+    
+    the password entropy (in bytes) can be be set with
+    PW_ENTROPY in password.h
 */
 void get_password(char *target, char *master_pass, int secret_fd) {
     
@@ -47,7 +57,7 @@ void get_password(char *target, char *master_pass, int secret_fd) {
     SHA256_Update(&sha256, secret_hash, SHA256_DIGEST_LENGTH);
     SHA256_Final(out_hash, &sha256);
 
-    // output the password
+    // output the password in base64
     BIO *bio;
     BIO *b64;
 
