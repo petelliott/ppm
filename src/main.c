@@ -6,17 +6,45 @@
 
 
 int main(int argc, char **argv) {
-    if (argc != 4) {
-        fprintf(stderr, "useage: %s <site> <user> <secret>\n", argv[0]);
-        exit(1);
+    char *secret_file_name = "/dev/null";
+    char *password = "";
+    char *user = "";
+    char *site = "";
+    int pass_flag = 0;
+
+    int c;
+    while ((c = getopt (argc, argv, "u:s:f:p")) != -1) {
+        switch (c) {
+            case 'u':
+                user = optarg;
+            case 's':
+                site = optarg;
+                break;
+            case 'f':
+                secret_file_name = optarg;
+                break;
+            case 'p':
+                pass_flag = 1;
+                break;
+        } 
     }
 
-    // TODO: getpass is obsolete
-    char *password = getpass("password:");
-    int secret_fd = open(argv[3], O_RDONLY);
+    int secret_fd = open(secret_file_name, O_RDONLY);
+    if (secret_fd < 0) {
+        perror(secret_file_name);
+        exit(1);
+    }
+    
+    if (pass_flag) {
+        // TODO: getpass is obsolete
+        password = getpass("password:");
+    }
 
-    get_password(argv[1], argv[2], password, secret_fd);
+
+    get_password(site, user, password, secret_fd);
 
     close(secret_fd);
-    free(password);
+    if (pass_flag) {
+        free(password);
+    }
 }

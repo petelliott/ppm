@@ -37,7 +37,7 @@ void get_password(char *system, char *account, char *master_pass, int secret_fd)
         bytes_read = read(secret_fd, secret_read, SECRET_BLOCK_READ); 
         // NOTE: one update will have size 0
         SHA256_Update(&sha256, secret_read, bytes_read);
-    } while(bytes_read);
+    } while(bytes_read > 0);
     SHA256_Final(secret_hash, &sha256);
 
     // generate the output hash
