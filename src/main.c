@@ -8,19 +8,16 @@
 int main(int argc, char **argv) {
     char *secret_file_name = "/dev/null";
     char *password = "";
-    char *user = "";
-    char *site = "";
+    char *target = "";
     int pass_flag = 0;
 
     int c;
-    while ((c = getopt (argc, argv, "u:s:f:p")) != -1) {
+    while ((c = getopt (argc, argv, "t:s:p")) != -1) {
         switch (c) {
-            case 'u':
-                user = optarg;
-            case 's':
-                site = optarg;
+            case 't':
+                target = optarg;
                 break;
-            case 'f':
+            case 's':
                 secret_file_name = optarg;
                 break;
             case 'p':
@@ -41,7 +38,7 @@ int main(int argc, char **argv) {
     }
 
 
-    get_password(site, user, password, secret_fd);
+    get_password(target, password, secret_fd);
 
     close(secret_fd);
     if (pass_flag) {

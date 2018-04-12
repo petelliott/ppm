@@ -8,11 +8,11 @@
 
 
 /*
-    generate the password for a certain system and account
+    generate the password for a certain target
 */
-void get_password(char *system, char *account, char *master_pass, int secret_fd) {
+void get_password(char *target, char *master_pass, int secret_fd) {
     
-    char id_hash[SHA256_DIGEST_LENGTH];
+    char targ_hash[SHA256_DIGEST_LENGTH];
     char pass_hash[SHA256_DIGEST_LENGTH];
     char secret_hash[SHA256_DIGEST_LENGTH];
 
@@ -20,9 +20,8 @@ void get_password(char *system, char *account, char *master_pass, int secret_fd)
 
     // calculate the identity hash
     SHA256_Init(&sha256);
-    SHA256_Update(&sha256, system, strlen(system));
-    SHA256_Update(&sha256, account, strlen(account));
-    SHA256_Final(id_hash, &sha256);
+    SHA256_Update(&sha256, target, strlen(target));
+    SHA256_Final(targ_hash, &sha256);
 
     // calculate the password hash
     SHA256_Init(&sha256);
@@ -43,7 +42,7 @@ void get_password(char *system, char *account, char *master_pass, int secret_fd)
     // generate the output hash
     char out_hash[SHA256_DIGEST_LENGTH];
     SHA256_Init(&sha256);
-    SHA256_Update(&sha256, id_hash, SHA256_DIGEST_LENGTH);
+    SHA256_Update(&sha256, targ_hash, SHA256_DIGEST_LENGTH);
     SHA256_Update(&sha256, pass_hash, SHA256_DIGEST_LENGTH);
     SHA256_Update(&sha256, secret_hash, SHA256_DIGEST_LENGTH);
     SHA256_Final(out_hash, &sha256);
