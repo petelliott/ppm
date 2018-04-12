@@ -4,7 +4,7 @@ ppm: src/main.o src/password.o
 	$(CC) $^ -o $@ -lcrypto
 
 debug: CC=gcc -g
-debug: ppm
+debug: clean ppm
 
 src/%.o: src/%.c
 	$(CC) $^ -o $@ -c
