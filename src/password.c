@@ -51,6 +51,7 @@ void get_password(char *system, char *account, char *master_pass, int secret_fd)
     // output the password
     BIO *bio;
     BIO *b64;
+
     b64 = BIO_new(BIO_f_base64());
     bio = BIO_new_fp(stdout, BIO_NOCLOSE);
     BIO_push(b64, bio);
@@ -58,5 +59,4 @@ void get_password(char *system, char *account, char *master_pass, int secret_fd)
     BIO_flush(b64);
 
     BIO_free_all(b64);
-    putchar('\n');
 }

@@ -1,10 +1,15 @@
+CC=gcc -O2
+
 ppm: src/main.o src/password.o
-	gcc $^ -o $@ -lcrypto
+	$(CC) $^ -o $@ -lcrypto
+
+debug: CC=gcc -g
+debug: ppm
 
 src/%.o: src/%.c
-	gcc $^ -o $@ -lcrypto -c
+	$(CC) $^ -o $@ -c
 
-.PHONY: clean
+.PHONY: clean debug
 
 clean:
 	rm src/*.o

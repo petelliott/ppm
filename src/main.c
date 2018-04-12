@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
     }
 
     // TODO: getpass is obsolete
-    char *password = getpass("password");
+    char *password = getpass("password:");
     int secret_fd = open(argv[3], O_RDONLY);
 
     get_password(argv[1], argv[2], password, secret_fd);
