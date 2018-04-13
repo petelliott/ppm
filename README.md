@@ -1,5 +1,7 @@
 # Peter's Password Manager
 
+[![Build Status](https://travis-ci.org/Petelliott/ppm.svg?branch=master)](https://travis-ci.org/Petelliott/ppm)
+
 ## useage
 
 example:
