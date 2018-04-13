@@ -9,7 +9,10 @@ debug: clean ppm
 src/%.o: src/%.c
 	$(CC) $^ -o $@ -c
 
-.PHONY: clean debug
+.PHONY: clean debug test
+
+test: ppm
+	test/test.sh ppm
 
 clean:
 	rm src/*.o
