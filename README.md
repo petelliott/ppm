@@ -32,3 +32,14 @@ in your bashrc:
 ```
 alias ppm="pathto/ppm -ps secret_file -t"
 ```
+
+## testing
+
+sshpass is required to run the tests
+
+```
+$ sudo apt-get install sshpass
+$ make test
+```
+
+

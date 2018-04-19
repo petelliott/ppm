@@ -2,4 +2,6 @@ language: c
 dist: trusty
 
 script:
+    - sudo apt-get -qq update
+    - sudo apt-get install -y sshpass
     - make test

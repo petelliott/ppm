@@ -6,6 +6,7 @@ set -e
 # our info
 SECRET="$(cat /dev/urandom | head --bytes=128 | base64)"
 TARGET="$(cat /dev/urandom | head --bytes=32 | base64)"
+PASSWORD="$(cat /dev/urandom | head --bytes=32 | base64)"
 
 REFERENCE=$(dirname $1)/test/reference.sh
 
@@ -13,4 +14,5 @@ REFERENCE=$(dirname $1)/test/reference.sh
 [[ $(echo -n $SECRET | ./$1 -t "$TARGET") == $(echo -n $SECRET | $REFERENCE "$TARGET" "" /dev/null) ]]
 [[ $(echo -n $SECRET | ./$1 -s /dev/stdin) == $(echo -n $SECRET | $REFERENCE "" "" /dev/stdin) ]]
 [[ $(echo -n $SECRET | ./$1 -t $TARGET -s /dev/stdin) == $(echo -n $SECRET | $REFERENCE "$TARGET" "" /dev/stdin) ]]
-#TODO: password tests
+[[ $(echo -n $SECRET | sshpass -p $PASSWORD ./$1 -p) == $(echo -n $SECRET | $REFERENCE "" "$PASSWORD" /dev/null) ]]
+[[ $(echo -n $SECRET | sshpass -p $PASSWORD ./$1 -t $TARGET -s /dev/stdin -p) == $(echo -n $SECRET | $REFERENCE "$TARGET" "$PASSWORD" /dev/stdin) ]]
