@@ -1,6 +1,6 @@
 /*
-the get_password funtion of ppm
-Copyright (C) 2017  Peter Elliott
+the get_password function of ppm
+Copyright (C) 2018  Peter Elliott
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
